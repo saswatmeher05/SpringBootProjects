@@ -43,8 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 //			throw new ResourceNotFoundException("Employee", "Id", id);
 //		}
 		
-
-//				insted we can use lambda expression 
+//		insted we can use lambda expression 
 		return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "Id", id));
 
 	}
@@ -63,5 +62,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return existingEmployee;
 	}
 	
+	
+	@Override
+	public Employee deleteEmployeeById(long id) {
+		//check if the employee with specified id exists in database
+		Employee existingEmployee=employeeRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Employee", "Id", id));
+		
+		employeeRepository.deleteById(id);
+		return existingEmployee;
+	}
 	
 }
